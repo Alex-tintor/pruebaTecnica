@@ -1,0 +1,97 @@
+<div class="row g-4">
+  <div class="col-12">
+    <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+    <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+  </div>
+
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-body">
+        <h3 class="card-title">Crear transacción</h3>
+
+        <div class="mb-2">
+          <label class="form-label">Identificador tarjeta</label>
+          <input class="form-control" [(ngModel)]="createForm.identificadorTarjeta">
+        </div>
+
+        <div class="mb-2">
+          <label class="form-label">Total compra</label>
+          <input type="number" class="form-control" [(ngModel)]="createForm.monto">
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Dirección compra</label>
+          <input class="form-control" [(ngModel)]="createForm.direccionCompra">
+        </div>
+
+        <button class="btn btn-primary" (click)="createTransaction()">Crear</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-body">
+        <h3 class="card-title">Anular transacción</h3>
+
+        <div class="mb-2">
+          <label class="form-label">Identificador tarjeta</label>
+          <input class="form-control" [(ngModel)]="annulForm.identificadorTarjeta">
+        </div>
+
+        <div class="mb-2">
+          <label class="form-label">Referencia</label>
+          <input class="form-control" [(ngModel)]="annulForm.referencia">
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Total compra</label>
+          <input type="number" class="form-control" [(ngModel)]="annulForm.totalCompra">
+        </div>
+
+        <button class="btn btn-danger" (click)="annulTransaction()">Anular</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h3 class="card-title mb-0">Listado de transacciones</h3>
+          <button class="btn btn-outline-secondary" (click)="loadTransactions()">Recargar</button>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Referencia</th>
+                <th>Tarjeta</th>
+                <th>Total</th>
+                <th>Dirección</th>
+                <th>Estado</th>
+                <th>Fecha creación</th>
+                <th>Fecha anulación</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let tx of transactions">
+                <td>{{ tx.numeroReferencia }}</td>
+                <td>{{ tx.identificadorTarjeta }}</td>
+                <td>{{ tx.monto }}</td>
+                <td>{{ tx.direccionCompra }}</td>
+                <td>{{ tx.estadoTransaccion }}</td>
+                <td>{{ tx.fechaCreacion }}</td>
+                <td>{{ tx.fechaAnulacion || '-' }}</td>
+              </tr>
+              <tr *ngIf="transactions.length === 0">
+                <td colspan="7" class="text-center">No hay transacciones</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

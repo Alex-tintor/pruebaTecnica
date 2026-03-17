@@ -1,0 +1,111 @@
+<div class="row g-4">
+  <div class="col-12">
+    <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+    <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+  </div>
+
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-body">
+        <h3 class="card-title">Crear tarjeta</h3>
+
+        <div class="mb-2">
+          <label class="form-label">PAN</label>
+          <input class="form-control" [(ngModel)]="createForm.pan">
+        </div>
+
+        <div class="mb-2">
+          <label class="form-label">Nombre titular</label>
+          <input class="form-control" [(ngModel)]="createForm.nombreTitular">
+        </div>
+
+        <div class="mb-2">
+          <label class="form-label">Número documento</label>
+          <input class="form-control" [(ngModel)]="createForm.numeroDocumento">
+        </div>
+
+        <div class="mb-2">
+          <label class="form-label">Tipo tarjeta</label>
+          <select class="form-select" [(ngModel)]="createForm.tipoTarjeta">
+            <option value="DEBITO">DEBITO</option>
+            <option value="CREDITO">CREDITO</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Teléfono</label>
+          <input class="form-control" [(ngModel)]="createForm.telefono">
+        </div>
+
+        <button class="btn btn-primary" (click)="createCard()">Crear</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-body">
+        <h3 class="card-title">Enrolar tarjeta</h3>
+
+        <div class="mb-2">
+          <label class="form-label">Identificador</label>
+          <input class="form-control" [(ngModel)]="enrollForm.identificador">
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Número validación</label>
+          <input type="number" class="form-control" [(ngModel)]="enrollForm.numeroDeValidacion">
+        </div>
+
+        <button class="btn btn-success" (click)="enrollCard()">Enrolar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h3 class="card-title mb-0">Listado de tarjetas</h3>
+          <button class="btn btn-outline-secondary" (click)="loadCards()">Recargar</button>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Identificador</th>
+                <th>PAN</th>
+                <th>Titular</th>
+                <th>Documento</th>
+                <th>Tipo</th>
+                <th>Teléfono</th>
+                <th>Validación</th>
+                <th>Estado</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let card of cards">
+                <td>{{ card.identificador }}</td>
+                <td>{{ card.panMascara }}</td>
+                <td>{{ card.nombreTitular }}</td>
+                <td>{{ card.numeroDocumento }}</td>
+                <td>{{ card.tipoTarjeta }}</td>
+                <td>{{ card.telefono }}</td>
+                <td>{{ card.numeroValidacion }}</td>
+                <td>{{ card.estadoTarjeta }}</td>
+                <td>
+                  <button class="btn btn-sm btn-danger" (click)="deleteCard(card.identificador)">Eliminar</button>
+                </td>
+              </tr>
+              <tr *ngIf="cards.length === 0">
+                <td colspan="9" class="text-center">No hay tarjetas</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
